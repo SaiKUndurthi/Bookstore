@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+
+app.use(bodyParser.json());
 Genre = require('./models/genre');
 Book = require('./models/book');
 // Connect to mongoose
@@ -20,6 +22,16 @@ app.get('/api/genres', (req, res) => {
 			throw err;
 		}
 		res.json(genres);
+	});
+});
+
+app.post('/api/genres', (req, res) => {
+	var genre = req.body;
+	Genre.addGenre(genre, (err, genre) => {
+		if(err){
+			throw err;
+		}
+		res.json(genre);
 	});
 });
 
