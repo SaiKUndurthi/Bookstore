@@ -32,4 +32,13 @@ app.get('/api/books', (req, res) => {
 	});
 });
 
+app.get('/api/books/:_id', (req, res) => {
+	Book.getBookById(req.params._id, (err, book) => {
+		if(err){
+			throw err;
+		}
+		res.json(book);
+	});
+});
+
 app.listen(3000);
