@@ -3,13 +3,24 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+Genre = require('./models/genre');
+
 // Connect to mongoose
-mongoose.connect('mongodb://localhost/bookstore');
-console.log(mongoose);
+var options = {useNewUrlParser: true}
+mongoose.connect('mongodb://localhost/bookstore',options);
 var db = mongoose.connection;
 
 app.get('/',function(req,res){
 	res.send('Hello World!');
+});
+
+app.get('/api/genres', (req, res) => {
+	Genre.getGenres((err, genres) => {
+		if(err){
+			throw err;
+		}
+		res.json(genres);
+	});
 });
 
 app.listen(3000);
